@@ -2,13 +2,40 @@
 
 <div class="row">
     <div class="col">
-        <form action="">
-            <div class="input-group mb-3">
-                <input type="text" class="form-control" placeholder="Buscar pais">
-                <div class="input-group-append">
-                    <button class="btn btn-outline-secondary" type="button" id="button-addon2">Buscar</button>
-                </div>
-            </div>
-        </form>
+        <app-pais-input 
+            (onEnter)="buscarPorPais($event)"
+            (onDebounce)="sugerencias($event)"
+            placeholder="Buscar por pais..."
+        >
+        </app-pais-input>
+    </div>
+</div>
+
+<ul *ngIf="mostrarSugerencias" class="list-group">
+    <li
+        class="list-group-item list-group-item-action" 
+        *ngFor="let pais of paisesSugeridos">
+        <a class="nav-link"
+            [routerLink]="['/pais', pais.cca3]" >
+            {{pais.name.common}}
+        </a>
+    </li>
+    <li
+        class="list-group-item list-group-item-action"
+        (click)="buscarSugerido(termino)">
+        <a class="nav-link" >
+            buscar: "{{termino}}"
+        </a>
+    </li>
+</ul>
+
+<hr> 
+<div *ngIf="hayError" class="alert alert-danger">
+    No se encontraron resultados de: {{termino}}
+</div>
+
+<div *ngIf="paises.length > 0" class="row">
+    <div class="col">
+        <app-pais-tabla [data-pais-tabla]="paises"></app-pais-tabla>
     </div>
 </div>

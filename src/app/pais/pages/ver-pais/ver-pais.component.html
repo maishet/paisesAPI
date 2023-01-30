@@ -1,1 +1,74 @@
-<p>ver-pais works!</p>
+
+<div *ngIf="!pais; else divPais" class="alert alert-info">
+    Espere por favor...
+</div>
+
+<ng-template #divPais>
+    <div class="card">
+        <div class="card-header">
+            <h3>{{pais.name.common}}</h3>
+        </div>
+        <div class="card-body">
+            <img [src]="pais.flags.png" alt="Bandera" class="img-fluid">
+            <p class="card-text">
+                <b>Capital: </b> {{pais.capital}}
+            </p>
+            <p class="card-text">
+                <b>Alpha3Code: </b> {{pais.cca3}}
+            </p>
+            <p class="card-text">
+                <b>Region: </b> {{pais.region}}
+            </p>
+            <p class="card-text">
+                <b>Subregion: </b> {{pais.subregion}}
+            </p>
+            <p class="card-text">
+                <b>Population: </b> {{pais.population | number}}
+            </p>
+            <p class="card-text">
+                <b>Area: </b> {{pais.area | number}} km<sup>2</sup>
+            </p>
+            <p class="card-text">
+                <b>Timezones: </b> {{pais.timezones | json}}
+            </p>
+            <p class="card-text">
+                <b>NativeName: </b> {{pais.name.nativeName | json}}
+            </p>
+            <p  *ngFor="let item of pais.currencies | keyvalue "
+                class="card-text">
+                <b>Simbolo: </b> 
+                {{ item.value.symbol }}
+                <b>  Nombre: </b> 
+                {{ item.value.name }}
+            </p>
+            <p class="card-text">
+                <b>Languages: </b> {{pais.languages.spa}}
+            </p>
+            <p class="card-text">
+                <b>Latlng: </b> {{pais.latlng}}
+            </p>
+            <p class="card-text">
+                <b>RegionalBlocs: </b> {{pais.borders}}
+            </p>
+            <p class="card-text">
+                <b>Alpha2Code: </b> {{pais.cca2}}
+            </p>
+            <p class="card-text">
+                <b>CallingCodes: </b> {{pais.capitalInfo | json}}
+            </p>
+            <p class="card-text">
+                <b>AltSpellings: </b> {{pais.altSpellings}}
+            </p>
+        </div>
+
+        <!-- tarjeta de traducciones -->
+        <div class="card-footer">
+            <h3>Traducciones</h3>
+            <span
+            *ngFor="let language of pais.translations | keyvalue"
+            class="badge bg-primary mx-2"
+            >{{ language.value.common }}</span
+          >
+        </div>
+    </div>
+</ng-template>
